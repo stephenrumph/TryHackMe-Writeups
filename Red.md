@@ -42,7 +42,7 @@
 
 #### Nmap Scan
 
-First up, nmap with the service -sV and script -sC flags. I decided to just go straight in and scan all the ports with the -p- flag so I did not miss anaything. 
+First up, nmap with the service -sV and script -sC flags. I decided to just go straight in and scan all the ports with the -p- flag so I did not miss anything. 
 
 `nmap -sV -sC -p- [Target IP]`
 
@@ -51,7 +51,7 @@ First up, nmap with the service -sV and script -sC flags. I decided to just go s
 - Theres a http service running on port 80.
 - SSH on port 22.
 - There is a redirect to a page `/index.php?page=home.html
-` which looks like it may give be vulnerable to file inclusion.
+` which looks like it may be vulnerable to file inclusion.
 - There is a template running on the server using bootstrap.  
 
 ![Screenshot 2025-05-10 at 1 54 44 pm](https://github.com/user-attachments/assets/498149cb-1779-4deb-bb11-4bd57e028410)
@@ -99,13 +99,13 @@ Let's see what we can see any hidden files inside of the blue home directory usi
 
 ![Screenshot 2025-05-10 at 3 50 04 pm](https://github.com/user-attachments/assets/a6a3de98-ae42-4c53-8c1f-1e92f5ffdcdd)
 
-## Initial Access
+## 🔐 Initial Access
 
 When we decode the base64 string we get a password. The password on its own does not work to get into a shell using SSH but we can use it to make variations with hashcat then use hydra to bruteforce the password. 
 
 ![Screenshot 2025-05-10 at 4 00 54 pm](https://github.com/user-attachments/assets/1e166216-78ab-4b01-bb27-d1675f19715d)
 
-Let's start by making those variations. First things first make a file and add the secret password into it. Call it whatever you want. This could technically be classed as weaponization but its more of an intiial access. 
+Let's start by making those variations. First things first make a file and add the secret password into it. Call it whatever you want. This could technically be classed as weaponization but its more of an initial access. 
 
 `echo 'sup3r_p@s$w0rd!' > base.txt`
 
@@ -133,12 +133,15 @@ The first flag is in and access is gained. Let's take a look around.
 
 It looks like the red team have kicked me off the shell I just got and the password is no longer working. We can generate another one though and log back in. We'll need to work faster. 
 
+## ♻️ Persistence
+
 The red team taunt us with things such as `I bet you are going to use linpeas and pspy, noob` and pretending to give us a password that calls us a loser. They must have thought of this and luckily we don't need it. The blue team account is not a sudoer so that's out of the question. We'll need to move laterally another way.
 
 Running `ls -la /etc/hosts` there is write permissions for the user on it and when we look inside that file we can see it has some hosts that do not exist on this system. The one that stands out is the IP that is attached to redrules.thm. 
 
 ![Screenshot 2025-05-10 at 4 38 31 pm](https://github.com/user-attachments/assets/6bcf2265-d813-452f-9329-235d0218262e)
 
+## 🔁 Lateral Movement
 
 There is a process running using that URL which we can use to get a reverse shell on the red team account. `ps aux | grep redrules`  
 
@@ -150,7 +153,7 @@ This part needs to be done quick as the red team are removing the records when l
 
 ![Screenshot 2025-05-10 at 4 51 36 pm](https://github.com/user-attachments/assets/af22949c-7233-4d5e-ae71-8125a24c1bbb)
 
-## Weaponization and Exploitation
+## 🔼 Privilege Escalation
 
 Now that we have access to the red account and are no longer getting booted out. We can take a look around. Since we had some luck with a hidden file inthe blue folder, maybe theres a hidden file or folder in the red team home folder. To check this run `ls -la` and there are a few. Taking a look around the one with the most interesting is the `.git` directory which contains an ELF executable. 
 
@@ -158,9 +161,7 @@ Now that we have access to the red account and are no longer getting booted out.
 
 This version of `pkexec` is vulnerable to buffer overflow attack which can lead to a root shell through the policy kit library and has an attached CVE `CVE-2021-4034`. There is a PoC already made which we can use to exploit this vulnerability found here [https://github.com/mebeim/CVE-2021-4034](https://raw.githubusercontent.com/joeammond/CVE-2021-4034/refs/heads/main/CVE-2021-4034.py). As the `psexec` executable lives in a user folder and has its SUID bit set for the red user, the script needs a small adjustment to the path the executable is found. 
 
-## Delivery and Installation
-
 Once that's complete then find a way to get the file to the target machine from the attack box. I use the `python3 -m http.server` in the working directory on the attackbox then use `wget` on the target to move the file across. 
 
-## Action on objectives
+## 🎯 Action on Objectives
 Once you've done that, run `chmod +x exploit.py` then `./exploit.py` and you should now be the root user. Get the flag from the home folder and job done. 
