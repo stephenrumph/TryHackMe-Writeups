@@ -12,19 +12,32 @@
 
 ## 🧠 Framework - Mitre ATT&CK
 
-- [ ] Reconnaisiance
-- [ ] Initial Access
-- [ ] Lateral Movement
-- [ ] Exploitation
-- [ ] Installtion
-- [ ] Command & Control
-- [ ] Action on Objectives
+- ✅ Reconnaissance  
+  Used Nmap, Nikto, and manual enumeration of the web app.
+
+- ✅ Initial Access  
+  Gained credentials via LFI + base64 decode → brute-forced into SSH as `blue`.
+
+- ✅ Execution  
+  Used `wget`, `ffuf`, and triggered code via LFI + local shell execution.
+
+- ✅ Persistence  
+  Briefly regained access after red team interference; not long-term persistence. Although this was not constant control I was able to get back in quite easily by generating a new password. 
+
+- ✅ Lateral Movement  
+  Transitioned from `blue` to `red` via `/etc/hosts` abuse and reverse shell.
+
+- ✅ Privilege Escalation  
+  Exploited SUID `pkexec` with CVE-2021-4034 to root.
+
+- ✅ Action on Objectives  
+  Read `root` flag and documented final compromise.
 
 ## Reasons for choosing framework
 - We are attacking the red teams control of the web server. Using a framework such as this will give me structure as I enumerate the server. 
 ---
 
-## 🛰️ Reconnaisance
+## 🛰️ Reconnaissance
 ### Enumeration
 
 #### Nmap Scan
@@ -38,7 +51,7 @@ First up, nmap with the service -sV and script -sC flags. I decided to just go s
 - Theres a http service running on port 80.
 - SSH on port 22.
 - There is a redirect to a page `/index.php?page=home.html
-` which looks like it may give be vuonerable to file inclusion.
+` which looks like it may give be vulnerable to file inclusion.
 - There is a template running on the server using bootstrap.  
 
 ![Screenshot 2025-05-10 at 1 54 44 pm](https://github.com/user-attachments/assets/498149cb-1779-4deb-bb11-4bd57e028410)
@@ -73,7 +86,7 @@ Cyber Chef does it again. An easy decode from Base64 and we see our php script. 
 
 ![Screenshot 2025-05-10 at 2 51 13 pm](https://github.com/user-attachments/assets/13e4c40e-6945-4c3b-bcdf-f74f2fff1da0)
 
-Now its known we can read files using the base64 encoding and the local file inclusion vulnerability. Let's try some commoon ones. by changing the directory and file at the end of the URL. 
+Now its known we can read files using the base64 encoding and the local file inclusion vulnerability. Let's try some common ones. by changing the directory and file at the end of the URL. 
 
 - ✅ `/index.php?page=php://filter/convert.base64-encode/resource=/etc/passwd`
 - ❌ `/index.php?page=php://filter/convert.base64-encode/resource=/etc/shadow`
@@ -96,7 +109,7 @@ Let's start by making those variations. First things first make a file and add t
 
 `echo 'sup3r_p@s$w0rd!' > base.txt`
 
-then we make the vaiations...
+then we make the variations...
 
 `hashcat -a 0 -r /usr/share/hashcat/rules/rockyou-30000.rule -o variations.txt base.txt --stdout`
 
@@ -120,7 +133,7 @@ The first flag is in and access is gained. Let's take a look around.
 
 It looks like the red team have kicked me off the shell I just got and the password is no longer working. We can generate another one though and log back in. We'll need to work faster. 
 
-The red team taunt us with things such as `I bet you are going to use linpeas and pspy, noob` and pretending to give us a password that calls us a loser. They must have thought of this and luckily we don't need it. The blue team account is not a sudoer so that's out of the question. We'll need to move latterally another way.
+The red team taunt us with things such as `I bet you are going to use linpeas and pspy, noob` and pretending to give us a password that calls us a loser. They must have thought of this and luckily we don't need it. The blue team account is not a sudoer so that's out of the question. We'll need to move laterally another way.
 
 Running `ls -la /etc/hosts` there is write permissions for the user on it and when we look inside that file we can see it has some hosts that do not exist on this system. The one that stands out is the IP that is attached to redrules.thm. 
 
@@ -137,10 +150,17 @@ This part needs to be done quick as the red team are removing the records when l
 
 ![Screenshot 2025-05-10 at 4 51 36 pm](https://github.com/user-attachments/assets/af22949c-7233-4d5e-ae71-8125a24c1bbb)
 
-## Weaponization
+## Weaponization and Exploitation
 
-Now that we have access to the red account and are no longer getting booted out. We can take a look around. Since we had some luck with a hidden file inthe blue folder, maybe theres a hidden file or folder in the red team home folder. To check this run `ls -la` and there are a few. Taking a look around the one with the most interesting is the `.git` directory whicn contains an ELF executable. 
+Now that we have access to the red account and are no longer getting booted out. We can take a look around. Since we had some luck with a hidden file inthe blue folder, maybe theres a hidden file or folder in the red team home folder. To check this run `ls -la` and there are a few. Taking a look around the one with the most interesting is the `.git` directory which contains an ELF executable. 
 
 ![Screenshot 2025-05-10 at 5 20 30 pm](https://github.com/user-attachments/assets/2c864625-7229-4d24-81c5-a62f25914623)
 
-This version of `pkexec` is vulnerable to buffer overflow attack which can lead to a root shell through the policy kit library and has an attached CVE `CVE-2021-4034`. There is a PoC already made which we can use to explot this vulnerability found here https://github.com/mebeim/CVE-2021-4034.  
+This version of `pkexec` is vulnerable to buffer overflow attack which can lead to a root shell through the policy kit library and has an attached CVE `CVE-2021-4034`. There is a PoC already made which we can use to exploit this vulnerability found here [https://github.com/mebeim/CVE-2021-4034](https://raw.githubusercontent.com/joeammond/CVE-2021-4034/refs/heads/main/CVE-2021-4034.py). As the `psexec` executable lives in a user folder and has its SUID bit set for the red user, the script needs a small adjustment to the path the executable is found. 
+
+## Delivery and Installation
+
+Once that's complete then find a way to get the file to the target machine from the attack box. I use the `python3 -m http.server` in the working directory on the attackbox then use `wget` on the target to move the file across. 
+
+## Action on objectives
+Once you've done that, run `chmod +x exploit.py` then `./exploit.py` and you should now be the root user. Get the flag from the home folder and job done. 
