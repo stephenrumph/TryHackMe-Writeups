@@ -5,7 +5,7 @@ icon: user-hoodie
 # Red
 
 **Date:** 2025-05-10\
-**Profile:** cyphie\
+**Profile:** skrumf\
 **Room URL:** [Link to Room](https://tryhackme.com/room/redisl33t)\
 **Difficulty:** Easy\
 **Machine:** Kali Linux\
