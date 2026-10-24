@@ -7,3 +7,6 @@
 * [Projects](projects/README.md)
   * [Planning an Incident Response Project](projects/ir-planning.md)
   * [Incident Response, End to End](projects/incident-response.md)
+* [Film Reviews](film-reviews/README.md)
+* [Drawing Practice](drawing-practice/README.md)
+* [Electronics Projects](electronics/README.md)
