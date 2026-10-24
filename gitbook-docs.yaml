@@ -1,0 +1,11 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+site:
+  title: TryHackMe Writeups
+  structure:
+    - type: space
+      key: space-1
+      title: Red
+      path: red
+      default: true
+      content:
+        directory: ./red
