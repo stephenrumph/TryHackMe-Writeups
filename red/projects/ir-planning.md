@@ -5,7 +5,7 @@ icon: clipboard-list
 # Planning an Incident Response Project
 
 **Date:** 2025-06-12\
-**Profile:** cyphie\
+**Profile:** skrumf\
 **Tags:** Blue Team, Incident Response, Project Management
 
 ***
