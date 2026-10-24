@@ -1,6 +1,6 @@
 $schema: https://api.gitbook.com/gitbook-docs.yaml
 site:
-  title: TryHackMe Writeups
+  title: Project Writeups
   structure:
     - type: space
       key: space-1
