@@ -9,5 +9,5 @@
   * [Incident Response, End to End](projects/incident-response.md)
 * [Film Reviews](film-reviews/README.md)
   * [Batman (2025)](film-reviews/batman-2025.md)
-* [Drawing Practice](drawing-practice/README.md)
-* [Electronics Projects](electronics/README.md)
+* [Drawing Practice](drawing-practice.md)
+* [Electronics Projects](electronics.md)
