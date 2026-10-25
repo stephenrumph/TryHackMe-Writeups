@@ -12,29 +12,61 @@ icon: film
 
 ***
 
-![Zorg showing off his multi-function gun](../.gitbook/assets/the-fifth-element/fifth-element-02.jpg)
+## Trailer
 
-![Zorg demonstrating the gun's flamethrower to the Mangalores](../.gitbook/assets/the-fifth-element/fifth-element-03.jpg)
+{% embed url="https://www.youtube.com/watch?v=Gg9nzOFVwtQ" %}
 
-![The cook in the flying Chinese restaurant](../.gitbook/assets/the-fifth-element/fifth-element-04.jpg)
+## Stills
 
-![The flying restaurant boat pulling up between the apartment towers](../.gitbook/assets/the-fifth-element/fifth-element-05.jpg)
-
-![Leeloo leaning against a doorway](../.gitbook/assets/the-fifth-element/fifth-element-06.jpg)
-
-![Diva Plavalaguna singing at the opera](../.gitbook/assets/the-fifth-element/fifth-element-07.jpg)
-
-![Korben Dallas, bruised and battered](../.gitbook/assets/the-fifth-element/fifth-element-08.jpg)
-
-![One of the aliens in its armoured suit](../.gitbook/assets/the-fifth-element/fifth-element-09.jpg)
-
-![The ball of evil heading for Earth](../.gitbook/assets/the-fifth-element/fifth-element-10.jpg)
-
-![The opera hall in flames](../.gitbook/assets/the-fifth-element/fifth-element-11.jpg)
-
-![A metal alien hand](../.gitbook/assets/the-fifth-element/fifth-element-12.jpg)
-
+{% tabs %}
+{% tab title="Arrival" %}
 ![The alien ship landing in the Egyptian desert](../.gitbook/assets/the-fifth-element/fifth-element-13.jpg)
+{% endtab %}
+
+{% tab title="The alien" %}
+![One of the aliens in its armoured suit](../.gitbook/assets/the-fifth-element/fifth-element-09.jpg)
+{% endtab %}
+
+{% tab title="The hand" %}
+![A metal alien hand](../.gitbook/assets/the-fifth-element/fifth-element-12.jpg)
+{% endtab %}
+
+{% tab title="Ball of evil" %}
+![The ball of evil heading for Earth](../.gitbook/assets/the-fifth-element/fifth-element-10.jpg)
+{% endtab %}
+
+{% tab title="Noodle boat" %}
+![The flying restaurant boat pulling up between the apartment towers](../.gitbook/assets/the-fifth-element/fifth-element-05.jpg)
+{% endtab %}
+
+{% tab title="The cook" %}
+![The cook in the flying Chinese restaurant](../.gitbook/assets/the-fifth-element/fifth-element-04.jpg)
+{% endtab %}
+
+{% tab title="Zorg's gun" %}
+![Zorg showing off his multi-function gun](../.gitbook/assets/the-fifth-element/fifth-element-02.jpg)
+{% endtab %}
+
+{% tab title="Flamethrower" %}
+![Zorg demonstrating the gun's flamethrower to the Mangalores](../.gitbook/assets/the-fifth-element/fifth-element-03.jpg)
+{% endtab %}
+
+{% tab title="Leeloo" %}
+![Leeloo leaning against a doorway](../.gitbook/assets/the-fifth-element/fifth-element-06.jpg)
+{% endtab %}
+
+{% tab title="The Diva" %}
+![Diva Plavalaguna singing at the opera](../.gitbook/assets/the-fifth-element/fifth-element-07.jpg)
+{% endtab %}
+
+{% tab title="Korben" %}
+![Korben Dallas, bruised and battered](../.gitbook/assets/the-fifth-element/fifth-element-08.jpg)
+{% endtab %}
+
+{% tab title="Opera fire" %}
+![The opera hall in flames](../.gitbook/assets/the-fifth-element/fifth-element-11.jpg)
+{% endtab %}
+{% endtabs %}
 
 ## Synopsis (spoiler-free)
 
