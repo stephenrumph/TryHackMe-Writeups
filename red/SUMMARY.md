@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Writeups & Projects](README.md)
-* [TryHackMe](tryhackme/README.md)
+* [Labs](tryhackme/README.md)
   * [Red](tryhackme/red.md)
   * [Beach Bar](tryhackme/beach-bar.md)
 * [Projects](projects/README.md)

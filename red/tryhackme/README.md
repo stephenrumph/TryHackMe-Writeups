@@ -2,6 +2,6 @@
 icon: flag
 ---
 
-# TryHackMe
+# Labs
 
-Write-ups from TryHackMe rooms and labs.
+Write-ups from hands-on labs and CTFs — TryHackMe, Hack The Box and others.
