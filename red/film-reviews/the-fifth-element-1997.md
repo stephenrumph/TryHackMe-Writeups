@@ -12,8 +12,6 @@ icon: film
 
 ***
 
-![Gary Oldman's name in the opening credits](../.gitbook/assets/the-fifth-element/fifth-element-01.jpg)
-
 ![Korben Dallas, bruised and battered](../.gitbook/assets/the-fifth-element/fifth-element-02.jpg)
 
 ![Zorg showing off his multi-function gun](../.gitbook/assets/the-fifth-element/fifth-element-03.jpg)
