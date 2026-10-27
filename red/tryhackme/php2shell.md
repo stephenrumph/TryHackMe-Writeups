@@ -36,7 +36,7 @@ PHP2Shell is really just the launchpad. Once an attacker is inside, you can bet 
 
 ## Target & Vulnerabilities
 
-* Target: =< PHP 8.4.26
+* Target: <= PHP 8.4.26
 * CVE-2026-109618 (Memory Disclosure)
 * CVE-2026-109619 (Remote Code Execution)
 
